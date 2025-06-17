@@ -5,7 +5,7 @@
 #import sympy as sip
 #import matplotlib.pyplot as plot
 #import numpy as npy
-
+#comentaeio random
 # Variable simbólica, ejemplo:
 #z = sip.symbols('z')
 
