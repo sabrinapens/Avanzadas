@@ -20,6 +20,7 @@ z = sp.symbols('z')
 
 # función predefinida de ejemplo
 f = (z**2 + 1) / ((z - 1)*(z + 2))#como expr en el tutorial
+#usar sympyfy para traducir los valores del usuario a valores sympy
 
 # polos
 polos = sp.singularities(f, z)
