@@ -19,7 +19,7 @@ import numpy as np
 z = sp.symbols('z')
 
 # función predefinida de ejemplo
-f = (z**2 + 1) / ((z - 1)*(z + 2))#como expr en el tutorial
+f = (z+7)#input() #(z**2 + 1) / ((z - 1)*(z + 2))#como expr en el tutorial
 #usar sympyfy para traducir los valores del usuario a valores sympy
 
 # polos
@@ -49,3 +49,12 @@ plt.title("Contour and singularities")
 plt.xlabel("Re(z)")
 plt.ylabel("Im(z)")
 plt.show()
+
+# Creamos el círculo original
+z_vals = radio * np.cos(t) + 1j * radio * np.sin(t)
+
+# Aplicamos la función a cada z
+f_vals = [complex(funcion.subs(z, val)) for val in z_vals]
+
+# Graficamos la imagen del círculo bajo f(z)
+plt.plot([c.real for c in f_vals], [c.imag for c in f_vals])
