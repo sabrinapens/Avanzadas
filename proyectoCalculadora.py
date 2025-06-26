@@ -1,12 +1,10 @@
 import sympy as syp
 import numpy as npy
 import matplotlib.pyplot as plt
-from sympy import oo  # infinito
+from sympy import oo  
 
-# Configuración inicial
 z = syp.symbols('z')
 
-# Menú principal
 print("Calculadora de residuos de funciones racionales y trascendentales.\n")
 print("1. Calculo de residuo.\n")
 print("2. Aplicaciones a integrales reales.\n")
@@ -19,7 +17,6 @@ if opcion == "1":
     print("2. Trascendente (exp, log, trig)")
     tipo_funcion = input("Seleccione (1/2): ").strip()
 
-    # Definir funciones permitidas
     if tipo_funcion == "1":
         variables_permitidas = {
             'z': z,
@@ -44,7 +41,6 @@ if opcion == "1":
         print("Opción no válida")
         exit()
 
-    # Ingreso de función
     entrada = input(f"\nIngrese f(z) ({ejemplo}): ")
     try:
         f = syp.sympify(entrada, locals=variables_permitidas)
@@ -53,12 +49,10 @@ if opcion == "1":
         print(f"Error: {e}")
         exit()
 
-    # Configuración de contorno circular
     radio = float(input("\nRadio del contorno circular (ej: 3): "))
     t = npy.linspace(0, 2*npy.pi, 500)
     z_vals = radio * npy.exp(1j * t)
 
-    # Cálculo de polos y residuos
     try:
         polos = syp.singularities(f, z)
         print("\nPolos encontrados:")
@@ -85,10 +79,9 @@ if opcion == "1":
         polos = []
         polos_dentro = []
 
-    # Visualización
+
     plt.figure(figsize=(12, 5))
     
-    # Plano z
     plt.subplot(1, 2, 1)
     plt.plot(npy.real(z_vals), npy.imag(z_vals), 'b-', label=f'Contorno |z|={radio}')
     for p in polos:
@@ -100,7 +93,6 @@ if opcion == "1":
     plt.grid(True); plt.legend()
     plt.gca().set_aspect('equal')
     
-    # Plano w = f(z)
     plt.subplot(1, 2, 2)
     try:
         f_vals = [complex(f.subs(z, val)) for val in z_vals]
@@ -117,16 +109,11 @@ if opcion == "1":
     plt.show()
 
 elif opcion == "2":
-    # ==============================================
-    # OPCIÓN 2: INTEGRALES REALES (-∞ a ∞)
-    # ==============================================
-    
     print("\nRequisitos para la función f(z):")
     print("1. f(z) debe ser racional (cociente de polinomios)")
     print("2. El denominador no debe tener raíces reales")
     print("3. Grado(denominador) ≥ Grado(numerador) + 2")
     
-    # Ingreso de función
     entrada = input("\nIngrese f(x) como función de z (ej: 1/(z**2 + 1)): ")
     try:
         f = syp.sympify(entrada, locals={'z': z})
@@ -135,12 +122,10 @@ elif opcion == "2":
         print(f"Error: {e}")
         exit()
     
-    # Verificar que sea racional
     if not f.is_rational_function(z):
         print("La función no es racional")
         exit()
     
-    # Verificar grado del denominador
     numerador, denominador = syp.fraction(f)
     grado_num = syp.degree(numerador, z)
     grado_den = syp.degree(denominador, z)
@@ -149,7 +134,6 @@ elif opcion == "2":
         print("No cumple condición de grados (den ≥ num + 2)")
         exit()
     
-    # Encontrar polos en semiplano superior
     polos = syp.singularities(f, z)
     polos_superiores = [p for p in polos if syp.im(p) > 0]
     
@@ -161,7 +145,6 @@ elif opcion == "2":
     for p in polos_superiores:
         print(f"• z = {p}")
     
-    # Calcular residuos
     print("\nResiduos correspondientes:")
     suma_residuos = 0
     for p in polos_superiores:
@@ -169,21 +152,17 @@ elif opcion == "2":
         suma_residuos += res
         print(f"Residuo en z = {p} → {res}")
     
-    # Calcular integral
     integral_real = 2*syp.pi*syp.I*suma_residuos
     print(f"\nValor de la integral ∫f(x)dx (-∞ a ∞) ≈ {integral_real}")
     
-    # Visualización
     plt.figure(figsize=(12, 5))
     
-    # Contorno semicircular
-    R = 10  # Radio grande para ∞
+    R = 10  
     theta = npy.linspace(0, npy.pi, 100)
     semicircle = R * npy.exp(1j * theta)
     eje_real = npy.linspace(-R, R, 200)
     contorno = npy.concatenate([eje_real, semicircle[::-1]])
     
-    # Plano z
     plt.subplot(1, 2, 1)
     plt.plot(npy.real(contorno), npy.imag(contorno), 'b-', label='Contorno')
     for p in polos:
@@ -196,7 +175,6 @@ elif opcion == "2":
     plt.gca().set_aspect('equal')
     plt.ylim(-1, R+1)
     
-    # Gráfico de la función real
     plt.subplot(1, 2, 2)
     x_vals = npy.linspace(-5, 5, 400)
     try:
