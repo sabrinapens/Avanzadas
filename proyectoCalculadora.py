@@ -50,9 +50,12 @@ if opcion == "1":
         exit()
 
     radio = float(input("\nRadio del contorno circular (ej: 3): "))
+    if radio <= 0:
+        print("El radio debe ser un número positivo mayor a cero.")
+        exit()
     t = npy.linspace(0, 2*npy.pi, 500)
     z_vals = radio * npy.exp(1j * t)
-
+    
     try:
         polos = syp.singularities(f, z)
         print("\nPolos encontrados:")
@@ -95,7 +98,7 @@ if opcion == "1":
     
     plt.subplot(1, 2, 2)
     try:
-        f_vals = [complex(f.subs(z, val)) for val in z_vals]
+        f_vals = [complex(f.subs(z, val)) for val in z_vals]#para cada valor en el contorno, sustituye z por el valor y evalúa f(z) como un número complejo
         plt.plot([v.real for v in f_vals], [v.imag for v in f_vals], 'purple', label='f(z)')
         plt.title("Transformación bajo f(z)")
         plt.xlabel("Re(f(z))"); plt.ylabel("Im(f(z))")
@@ -178,7 +181,7 @@ elif opcion == "2":
     plt.subplot(1, 2, 2)
     x_vals = npy.linspace(-5, 5, 400)
     try:
-        f_real = syp.lambdify(z, f, 'numpy')
+        f_real = syp.lambdify(z, f, 'numpy')#lambdify convierte la función simbólica en una función numérica; numpy permite evaluarla con arrays
         y_vals = f_real(x_vals)
         plt.plot(x_vals, y_vals, 'purple', label='f(x)')
         plt.fill_between(x_vals, y_vals, alpha=0.3, color='purple')
