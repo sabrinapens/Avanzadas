@@ -107,7 +107,7 @@ if opcion == "1":
     except:
         plt.title("No se pudo graficar f(z)")
     
-    plt.suptitle(f"Análisis de f(z) = {f}", y=1.02)
+    plt.suptitle(f"Análisis de f(z) = {f}")
     plt.tight_layout()
     plt.show()
 
@@ -191,7 +191,7 @@ elif opcion == "2":
     except:
         plt.title("No se pudo graficar f(x)")
     
-    plt.suptitle(f"Integral ∫({entrada})dx de -∞ a ∞ ≈ {integral_real}", y=1.02)
+    plt.suptitle(f"Integral ∫({entrada})dx de -∞ a ∞ ≈ {integral_real}")
     plt.tight_layout()
     plt.show()
 
