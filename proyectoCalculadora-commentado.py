@@ -167,7 +167,7 @@ elif opcion == "2":#opción principal 2, para calcular integrales reales usando 
     semicircle = R * npy.exp(1j * theta) #semicirculo en el plano *complejo*
     #se hace la extensión al plano complejo específicamente para poder aplicar el teorema. Si no, no se puede
     eje_real = npy.linspace(-R, R, 200)
-    contorno = npy.concatenate([eje_real, semicircle[::-1]])
+    contorno = npy.concatenate([eje_real, semicircle[::-1]])#creacion del ontorno, concatenando el eje real y el semicirculo invertido donde el ::1 en el semicirculo invierte el orden de los puntos para que vaya de derecha a izquierda
     
     plt.subplot(1, 2, 1)# subgráfica 1 para el contorno de integración
     plt.plot(npy.real(contorno), npy.imag(contorno), 'b-', label='Contorno')
